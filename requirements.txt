@@ -1,0 +1,11 @@
+django
+django-activity-stream
+pinax-likes
+django-crispy-forms
+psycopg2
+django-cors-headers
+stream_django
+django-autoslug
+pillow
+gunicorn
+django-allauth

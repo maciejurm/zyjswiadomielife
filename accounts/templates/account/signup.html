@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Logowanie{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+{% load account %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <h2 class="mt-5">Logowanie</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary text-lowercase letter-spacing-1">Zarejestruj</button>
+            </form>
+            <div class="col-lg-12 text-center mt-3">
+                    {% load socialaccount %}
+                    <h6>Lub zarejestruj się przez:</h6>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <a href="{% provider_login_url "facebook" method="oauth2" %}" class="btn btn-block text-white mt-3" style="background-color:#3b5998;">Facebook</a>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <a href="{% provider_login_url "google" next="/account/dashboard/" %}" class="btn btn-block btn-danger text-white mt-3">Google +</a>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <h4 class="mt-5">Jakie możliwości daje rejestracja na Żyj świadomie?</h4>
+
+            <dl class="mt-2">
+            <dt>Obserwowanie interesujących tematów</dt>
+            <dd class="mb-3">Posiadając konto możesz obserwować interesujące Cię kategorie i stworzyć spersonalizowaną tablicę aktywności.
+            </dd>
+            <dt>Dodawanie treści</dt>
+            <dd class="mb-3">Logując się możesz dodawać treści które Cię inspirują w formie tekstowej, wideo, zdjęć a nawet dodając link na przykład do jakiegoś artykułu z poza Żyj świadomie.</dd>
+            <dt>Dodawanie komentarzy</dt>
+            <dd>Będziesz mógł/a dyskutować z innymi użytkownikami na ciekawe tematy.</dd>
+            </dl>
+
+          </dl>
+        </div>
+    </div>
+</div>
+{% endblock %}

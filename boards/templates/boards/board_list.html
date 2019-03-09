@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Strona główna{% endblock %}
+
+{% block content %}
+
+<section class="hero-home">
+    <div class="swiper-container hero-slider">
+      <div class="swiper-wrapper dark-overlay">
+        <div style="background-image:url({% static 'img/photo/photo-1490578474895-699cd4e2cf59.jpg' %})" class="swiper-slide"></div>
+      </div>
+    </div>
+    <div class="container py-6 py-md-7 text-white z-index-20">
+      <div class="row">
+        <div class="col-xl-10">
+          <div class="text-center text-lg-left">
+            <h1 class="display-3 font-weight-bold text-shadow">Społeczność Żyj świadomie</h1>
+          </div>
+          <div class="">
+              <p class="text-lg">Portale społecznościowe skupiają się na obserwacji znajomych i rodziny, ale nie zawsze podzielają oni nasze zainteresowania. Dołącz do Żyj świadomie
+              ,dziel się tym co Cię fascynuje, obserwuj i dyskutuj na tematy które uwielbiasz i które Cię wspierają.</p>
+              <a href="{% url 'account_login' %}" class="btn btn-primary mt-3">Zaloguj</a>
+              <a href="{% url 'account_signup' %}" class="btn btn-primary mt-3">Zarejestruj</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="container-fluid">
+    <div class="text-center">
+    <div class="scrollmenu">
+      <a href="#home">Najnowsze</a>
+      <a href="#news">Obserwujesz</a>
+    </div> 
+  </div>
+  </div>
+  <div class="container">
+  <div class="col-lg-12">
+    <div class="d-flex justify-content-between align-items-center flex-column flex-md-row mb-4">
+      <div class="mr-3">
+        <h3>Najnowsze wpisy</h3>
+      </div>
+      <div>
+       <!-- <label for="form_sort" class="form-label mr-2">Sort by</label>
+        <select name="sort" id="form_sort" data-style="btn-selectpicker" title="" class="selectpicker">
+          <option value="sortBy_0">Most popular   </option>
+          <option value="sortBy_1">Recommended   </option>
+          <option value="sortBy_2">Newest   </option>
+          <option value="sortBy_3">Oldest   </option>
+          <option value="sortBy_4">Closest   </option>
+        </select>
+        -->
+      </div>
+    </div>
+    <div class="row">
+    {% for embed in embeds %}
+                    <!-- place item-->
+                    <div data-marker-id="59c0c8e39aa2eed0626e485d" class="col-sm-6 col-xl-4 mb-5">
+                            <div class="card border-0 shadow">
+                              <div class="card-img-top overflow-hidden gradient-overlay"><img src="{{ embed.thumbnail_url }}" alt="Mid-Century Modern Garden Paradise" class="img-fluid"/><a href="{{ embed.get_absolute_url }}" class="tile-link"></a>
+                                <div class="card-img-overlay-bottom z-index-20">
+
+                                </div>
+                                <div class="card-img-overlay-top text-right"><a href="javascript: void();" class="card-fav-icon position-relative z-index-40"> 
+                                    <svg class="svg-icon text-white">
+                                      <use xlink:href="#heart-1"> </use>
+                                    </svg></a></div>
+                              </div>
+                              <div class="card-body d-flex align-items-center">
+                                <div class="w-100">
+                                  <h6 class="card-title"><a href="{{ embed.get_absolute_url }}" class="text-decoration-none text-dark">{{ embed.title }}</a></h6>
+                                  <div class="d-flex card-subtitle mb-3">
+                                    <p class="flex-grow-1 mb-0 text-muted text-sm">{{ embed.description|truncatewords:10|striptags }}</p>
+                
+                                   
+                                  </div>
+
+                                </div>
+                              </div>
+                              <div class="card-footer">
+                                    <div class="media text-white text-sm align-items-center"><a href="{{ embed.author.get_absolute_url }}"><img src="{{ embed.author.profile.photo.url }}" alt="{{ subject.author.username }}" class="avatar avatar-sm avatar-border-white mr-2"/></a>
+                                        <div class="media-body text-dark"><a href="{{ embed.author.get_absolute_url }}">{{ embed.author.username }}</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                          <!-- place item-->
+    {% endfor %}
+    {% for subject in subjects %}
+      <!-- place item-->
+      <div data-marker-id="59c0c8e33b1527bfe2abaf92" class="col-sm-6 col-xl-4 mb-5">
+        <div class="card border-0 shadow">
+          <div class="card-body d-flex align-items-center">
+            <div class="w-100">
+              <h6 class="card-title"><a href="{{ subject.get_absolute_url }}" class="text-decoration-none text-dark">{{ subject.title }}</a></h6>
+              <div class="d-flex card-subtitle mb-3">
+                <p class="flex-grow-1 mb-0 text-muted text-sm">
+                    {{subject.body}}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="media text-white text-sm align-items-center"><a href="{{ subject.author.get_absolute_url }}"><img src="{{ subject.author.profile.photo.url }}" alt="{{ subject.author.username }}" class="avatar avatar-sm avatar-border-white mr-2"/></a>
+                <div class="media-body text-dark"><a href="{{ subject.author.get_absolute_url }}">{{ subject.author.username }}</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+    <!-- Pagination -->
+    <nav aria-label="Page navigation example">
+      <ul class="pagination pagination-template d-flex justify-content-center">
+        <li class="page-item"><a href="#" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
+        <li class="page-item active"><a href="#" class="page-link">1</a></li>
+        <li class="page-item"><a href="#" class="page-link">2</a></li>
+        <li class="page-item"><a href="#" class="page-link">3</a></li>
+        <li class="page-item"><a href="#" class="page-link"> <i class="fa fa-angle-right"></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+{% endblock %}

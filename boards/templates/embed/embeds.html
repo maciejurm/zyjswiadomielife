@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Sprawdzamy{% endblock %}
+
+{% block content %}
+
+<div style="margin-top: 100px;">
+<div class="container">
+    <h5 class="mb-4">Test iframely</h5>
+    <ul>
+            <li>{{ embed.title }}</li>
+            <li>{{ embed.description }}</li>
+        </ul>
+    <img src="{{ embed.thumbnail_url }}" />
+</div>
+</div>
+
+{% endblock %}
