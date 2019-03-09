@@ -89,9 +89,9 @@ ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda u: "/account/%s" % u.username,
 }
 
-IFRAMELY_KEY = '0e39b61ec3ff902600d8569a458597e3'
+IFRAMELY_KEY = '493c9ebbdfcbdac2a10d6b'
 
-LOGIN_REDIRECT_URL = 'accounts/login/'
+LOGIN_REDIRECT_URL = '/accounts/login/'
 
 ROOT_URLCONF = 'zyjswiadomielife.urls'
 

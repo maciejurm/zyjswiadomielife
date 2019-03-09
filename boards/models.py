@@ -10,7 +10,7 @@ from django.utils import timezone
 class Board(models.Model):
     title = models.CharField(max_length=255, verbose_name='Tytuł')
     slug = AutoSlugField(populate_from='title', unique=True)
-    image = models.ImageField(upload_to='board-cover', verbose_name='Tło kategorii')
+    image = models.ImageField(upload_to='board-cover', verbose_name='Tło kategorii', null=True, blank=True)
     body = models.TextField(verbose_name='Opis kategorii')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -19,6 +19,7 @@ class Board(models.Model):
         return self.title
 
     class Meta:
+        ordering = ['-created_at']
         verbose_name='Dział'
 
     def get_absolute_url(self):
@@ -53,14 +54,15 @@ class Subscribe(models.Model):
 class Subject(models.Model):
     title = models.CharField(max_length=255, verbose_name='Tytuł')
     slug = AutoSlugField(populate_from='title', unique=True)
-    body = models.TextField(blank=True)
+    body = models.TextField(blank=True, verbose_name='Treść')
     image = models.ImageField(upload_to='subject', null=True, blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    board = models.ForeignKey(Board, on_delete=models.CASCADE, related_name='subjects')
+    board = models.ForeignKey(Board, on_delete=models.CASCADE, related_name='subjects', verbose_name='Kategoria')
 
     class Meta:
+        ordering = ['-created_at']
         verbose_name = 'Post'
 
     def get_absolute_url(self):
@@ -74,9 +76,12 @@ class Embed(models.Model):
     thumbnail_url = models.URLField(max_length=255)
     html = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    board = models.ForeignKey(Board, on_delete=models.CASCADE, verbose_name='Kategoria', related_name='embedboards')
     created_at = models.DateTimeField(auto_now_add=True)
+    board = models.ForeignKey(Board, on_delete=models.CASCADE, blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse('embeddetail',
                        args=[self.id])
+
+    class Meta:
+        ordering = ['-created_at']

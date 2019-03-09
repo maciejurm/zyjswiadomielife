@@ -17,5 +17,4 @@ class Subject(ModelForm):
 
 class SubmitEmbed(forms.Form):
     url = forms.URLField()
-    board = forms.ModelChoiceField(queryset=Board.objects.all())
 
