@@ -9,3 +9,9 @@ django-autoslug
 pillow
 gunicorn
 django-allauth
+djangorestframework==3.9.2
+markdown==3.0.1
+django-filter==2.1.0
+pinax==0.9a2
+pinax-messages==2.0.2
+psycopg2-binary

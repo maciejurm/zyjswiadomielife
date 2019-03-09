@@ -14,8 +14,8 @@ import json
 from .forms import SubmitEmbed
 from .serializer import EmbedSerializer
 
+
 def save_embed(request):
-    
     if request.method == "POST":
         form = SubmitEmbed(request.POST)
         if form.is_valid():
@@ -31,6 +31,7 @@ def save_embed(request):
 
     return render(request, 'embed/embedadd.html', {'form': form})
 
+
 class BoardsPageView(ListView):
     """
     Basic ListView implementation to call the boards list.
@@ -41,13 +42,14 @@ class BoardsPageView(ListView):
     template_name = 'boards/list.html'
     context_object_name = 'boards'
 
+
 def boarddetail(request, slug):
     board = get_object_or_404(Board, slug=slug)
     subjects = board.subjects.all()
 
-    return render(request, 'board/boarddetail.html',
-                {'board': board,
-                'subjects': subjects})
+    return render(request, 'board/boarddetail.html', {'board': board,
+                                                      'subjects': subjects})
+
 
 class UserSubscriptionListView(ListView):
     model = Subscribe
@@ -56,21 +58,22 @@ class UserSubscriptionListView(ListView):
     context_object_name = 'subscriptions'
 
     def get_queryset(self, **kwargs):
-        user = get_object_or_404(User,
-                                 username=self.request.user)
+        user = get_object_or_404(User, username=self.request.user)
         return user.subscribed_users.all()
 
+
 def feed(request):
-  userids = []
-  for id in request.user.subscribed_boards.all():
-    userids.append(id)
+    userids = []
+    for id in request.user.subscribed_boards.all():
+        userids.append(id)
 
-  userids.append(request.user.id)
-  subjects = Subject.objects.filter(board_id__in=userids)[0:25]
-  embeds = Embed.objects.filter(board_id__in=userids)[0:25]
+    userids.append(request.user.id)
+    subjects = Subject.objects.filter(board_id__in=userids)[0:25]
+    embeds = Embed.objects.filter(board_id__in=userids)[0:25]
 
-  return render(request, 'boards/feed.html', {'subjects': subjects,
-                                            'embeds': embeds})
+    return render(request, 'boards/feed.html', {'subjects': subjects,
+                                                'embeds': embeds})
+
 
 class BoardCreate(CreateView):
     model = Board
@@ -80,11 +83,12 @@ class BoardCreate(CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
+
 def subjectlist(request):
     subjects = Subject.objects.all()
-
     return render(request, 'boards/subjectlist.html',
-                {'subjects': subjects})
+                            {'subjects': subjects})
+
 
 def subjectdetail(request, slug):
     subject = get_object_or_404(Subject, slug=slug)
@@ -101,19 +105,22 @@ def subjectdetail(request, slug):
     else:
         form = SubjectcommentForm()
 
-    return render(request, 'board/subjectdetail.html',
-                {'subject': subject,
-                'comments': comments,
-                'form': form})
+    return render(request,
+        'board/subjectdetail.html',
+        {'subject': subject,
+        'comments': comments,
+        'form': form})
+
 
 class SubjectCreate(CreateView):
 
     model = Subject
     fields = ['title', 'embed', 'body', 'board']
-    
+
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
 
 def embeddetail(request, id):
     embed = get_object_or_404(Embed, id=id)
@@ -135,6 +142,7 @@ def embeddetail(request, id):
                 'form': form,
                 'comments': comments})
 
+
 def subscribe(request, board):
     """
     Subscribes a board & returns subscribers count.
@@ -147,6 +155,7 @@ def subscribe(request, board):
     else:
         board.subscribers.add(user)
     return HttpResponse(board.subscribers.count())
+
 
 def subscribe_add(request, pk):
     this_board = Board.objects.get(pk=pk)

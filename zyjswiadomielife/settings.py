@@ -25,7 +25,7 @@ SECRET_KEY = '&)%@1ts$xv$#viuu3!c(_18o4a23(ba@t9ar4g1-(0o%v!m(_f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['django.local', 'zyjswiadomie.nanoapp.io']
+ALLOWED_HOSTS = ['django.local', 'zyjswiadomie.nanoapp.io', 'zyjswiadomie.local']
 
 
 # Application definition
