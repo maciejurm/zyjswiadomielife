@@ -77,6 +77,7 @@ class Embed(models.Model):
     html = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    board = models.ForeignKey(Board, on_delete=models.CASCADE, blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse('embeddetail',
