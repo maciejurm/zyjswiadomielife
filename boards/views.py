@@ -7,6 +7,7 @@ from django.views.generic.edit import CreateView
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 import requests
 import json
@@ -15,12 +16,12 @@ from .forms import SubmitEmbed
 from .serializer import EmbedSerializer
 
 def save_embed(request):
-    
+
     if request.method == "POST":
         form = SubmitEmbed(request.POST)
         if form.is_valid():
             url = form.cleaned_data['url']
-            r = requests.get('http://iframe.ly/api/oembed?url=' + url + '&key=' + settings.IFRAMELY_KEY)
+            r = requests.get('http://iframe.ly/api/oembed?url='+ url + '&api_key=' + '493c9ebbdfcbdac2a10d6b')
             json = r.json()
             serializer = EmbedSerializer(data=json, context={'request': request})
             if serializer.is_valid():
@@ -30,6 +31,7 @@ def save_embed(request):
         form = SubmitEmbed()
 
     return render(request, 'embed/embedadd.html', {'form': form})
+
 
 class BoardsPageView(ListView):
     """
@@ -109,7 +111,7 @@ def subjectdetail(request, slug):
 class SubjectCreate(CreateView):
 
     model = Subject
-    fields = ['title', 'embed', 'body', 'board']
+    fields = ['title', 'body', 'board']
     
     def form_valid(self, form):
         form.instance.author = self.request.user

@@ -47,7 +47,6 @@
               <div class="card-footer"></div>
             </div>
         </div>
-      
         {% endfor %}
       </div>
         <script type="text/javascript">
@@ -55,7 +54,7 @@
           $(document).ready(function(){
             $("a#subscribe_board").on("click", function () {
               {% if not request.user.is_authenticated %}
-              window.location.href = "{% url 'login' %}";
+              window.location.href = "{% url 'account_login' %}";
               {% else %}
               var $msg = $(this);
               var $subscribe_url = $(this).attr("href");
