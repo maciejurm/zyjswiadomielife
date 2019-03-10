@@ -21,8 +21,11 @@ def save_embed(request):
         form = SubmitEmbed(request.POST)
         if form.is_valid():
             url = form.cleaned_data['url']
+            board = form.cleaned_data['board']
             r = requests.get('http://iframe.ly/api/oembed?url='+ url + '&api_key=' + '493c9ebbdfcbdac2a10d6b')
             json = r.json()
+            if board:
+                json['board'] = board.id
             serializer = EmbedSerializer(data=json, context={'request': request})
             if serializer.is_valid():
                 embed = serializer.save()

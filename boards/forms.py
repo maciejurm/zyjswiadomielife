@@ -17,4 +17,4 @@ class Subject(ModelForm):
 
 class SubmitEmbed(forms.Form):
     url = forms.URLField()
-
+    board = forms.ModelChoiceField(label="Kategoria", queryset=Board.objects.all().order_by('title'), required=False)
